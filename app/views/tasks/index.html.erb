@@ -1,16 +1,17 @@
 <h1 class="tasks-title"><%= @project.name %> Tasks</h1>
+<%= link_to "New task", new_project_task_path(@project), class: "btn btn-outline-primary" %>
 
 <% if @tasks.empty? %>
   <div class="card no-projects">
     <div class="card-body">
-      <p class="card-text">There is no tasks for this project. Please create on <%= link_to "here", new_project_path %>.</p>
+      <p class="card-text">There is no tasks for this project. Please create on <%= link_to "here", new_project_task_path(@project) %>.</p>
     </div>
   </div>
 <% else %>
   <% @tasks.each do |task| %>
     <div class="card single-project">
       <div class="card-body">
-        <h4 class="card-title"><%= link_to task.name, project_task_path(@project, task) %> <span class="badge badge-pill"><%= task.priority %></span></h4>
+        <h4 class="card-title"><%= link_to task.name, project_task_path(@project, task) %> <span class="badge badge-pill"><%= task.priority %></span> <span class="badge badge-pill badge-success status"><%= task.done %></span></h4>
         <h6 class="card-subtitle mb-2 text-muted">Created: <%= task.created_at.strftime("%Y-%m-%d") %> | Deadline: <%= task.deadline.strftime("%Y-%m-%d") %></h6>
         <p class="card-text"><%= task.description %></p>
         <%= link_to "Edit", edit_project_task_path(@project, task), class: "card-link" %>

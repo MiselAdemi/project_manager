@@ -74,4 +74,63 @@ RSpec.describe TasksController, type: :controller do
       end
     end
   end
+
+  describe "PUT #update" do
+    before :each do
+      @task = FactoryGirl.create(:task)
+    end
+
+    context "valid attributes" do
+      it "finds the requested @task" do
+        put :update, params: { project_id: @task.project, id: @task, task: FactoryGirl.build(:task).attributes }
+        expect(assigns(:task)).to eq(@task)
+      end
+
+      it "changes @projects's attributes" do
+        put :update, params: { project_id: @task.project, id: @task, task: FactoryGirl.build(:task, name: "New name").attributes }
+        @task.reload
+        expect(@task.name).to eq("New name")
+      end
+
+      it "redirects to the updated project" do
+        put :update, params: { project_id: @task.project, id: @task, task: FactoryGirl.build(:task).attributes }
+        expect(response).to redirect_to([@task.project, @task])
+      end
+    end
+
+    context "invalid attributes" do
+      it "finds the requested @task" do
+        put :update, params: { project_id: @task.project, id: @task, task: FactoryGirl.build(:task, :invalid_task).attributes }
+        expect(assigns(:task)).to eq(@task)
+      end
+
+      it "does not change @task's attributes" do
+        put :update, params: { project_id: @task.project, id: @task, task: FactoryGirl.build(:task, name: "New name", description: nil).attributes }
+        @task.reload
+        expect(@task.name).to_not eq("New name")
+      end
+
+      it "re-renders the edit method" do
+        put :update, params: { project_id: @task.project, id: @task, task: FactoryGirl.build(:task, :invalid_task).attributes }
+        expect(response).to render_template(:edit)
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    before :each do
+      @task = FactoryGirl.create(:task)
+    end
+
+    it "deletes the task" do
+      expect{
+        delete :destroy, params: { project_id: @task.project, id: @task }
+      }.to change(Task, :count).by(-1)
+    end
+
+    it "redirects to tasks#index" do
+      delete :destroy, params: { project_id: @task.project, id: @task }
+      expect(response).to redirect_to(project_tasks_url(@task.project))
+    end
+  end
 end
