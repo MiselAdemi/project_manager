@@ -1,8 +1,11 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
-
+  before_filter :find_project, :only => [ :show, :edit, :update, :destroy ]
   def index
     @projects = Project.all
+  end
+
+  def show
   end
 
   def new
@@ -13,9 +16,9 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
 
     if @project.save
-      respond_to @project
+      redirect_to @project
     else
-      respond_to 'new'
+      render 'new'
     end
   end
 
@@ -35,5 +38,9 @@ class ProjectsController < ApplicationController
 
   def project_params
     params.require(:project).permit(:name, :description)
+  end
+
+  def find_project
+    @project = current_user.projects.find(params[:id])
   end
 end
