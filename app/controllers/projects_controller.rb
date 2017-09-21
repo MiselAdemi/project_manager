@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :find_project, :only => [ :show, :edit, :update, :destroy ]
-  
+
   def index
     @projects = current_user.projects
   end
@@ -24,11 +24,14 @@ class ProjectsController < ApplicationController
   end
 
   def edit
-
   end
 
   def update
-
+    if @project.update(project_params)
+      redirect_to @project
+    else
+      render 'edit'
+    end
   end
 
   def destroy
