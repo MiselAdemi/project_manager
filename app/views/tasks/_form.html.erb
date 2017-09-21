@@ -27,6 +27,12 @@
     <%= f.label :priority %><br>
     <%= f.select :priority, Task.priorities.keys, class: "form-control" %>
   </div>
+  <% unless @task.new_record? %>
+    <div class="form-group">
+      <%= f.label :done %><br>
+      <%= f.check_box :done %>
+    </div>
+  <% end %>
   <br>
   <div class="form-group">
     <%= f.submit class: "btn btn-lg btn-outline-primary" %>

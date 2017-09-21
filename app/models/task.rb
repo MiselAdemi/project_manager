@@ -1,7 +1,7 @@
 class Task < ApplicationRecord
   belongs_to :project
 
-  enum priority: [:low, :medium, :heigh]
+  enum priority: [:low, :medium, :high]
 
   validates :name, presence: true
   validates :description, presence: true
