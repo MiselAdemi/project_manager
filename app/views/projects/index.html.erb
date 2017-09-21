@@ -1,1 +1,14 @@
-<h1>Projects</h1>
+<h1 class="projects-title">Projects</h1>
+
+<% @projects.each do |project| %>
+  <div class="card single-project">
+    <div class="card-body">
+      <h4 class="card-title"><%= project.name %></h4>
+      <h6 class="card-subtitle mb-2 text-muted">Created <%= project.created_at.strftime("%Y-%m-%d") %></h6>
+      <p class="card-text"><%= project.description %></p>
+      <a href="#" class="card-link">Tasks</a>
+      <a href="#" class="card-link">Edit</a>
+      <a href="#" class="card-link">Delete</a>
+    </div>
+  </div>
+<% end %>
