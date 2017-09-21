@@ -1,14 +1,22 @@
 <h1 class="projects-title">Projects</h1>
 
-<% @projects.each do |project| %>
-  <div class="card single-project">
+<% if @projects.empty? %>
+  <div class="card no-projects">
     <div class="card-body">
-      <h4 class="card-title"><%= project.name %></h4>
-      <h6 class="card-subtitle mb-2 text-muted">Created <%= project.created_at.strftime("%Y-%m-%d") %></h6>
-      <p class="card-text"><%= project.description %></p>
-      <a href="#" class="card-link">Tasks</a>
-      <%= link_to "Edit", edit_project_path(project), class: "card-link" %>
-      <a href="#" class="card-link">Delete</a>
+      <p class="card-text">There is no projects. Please create on <%= link_to "here", new_project_path %>.</p>
     </div>
   </div>
+<% else %>
+  <% @projects.each do |project| %>
+    <div class="card single-project">
+      <div class="card-body">
+        <h4 class="card-title"><%= project.name %></h4>
+        <h6 class="card-subtitle mb-2 text-muted">Created <%= project.created_at.strftime("%Y-%m-%d") %></h6>
+        <p class="card-text"><%= project.description %></p>
+        <a href="#" class="card-link">Tasks</a>
+        <%= link_to "Edit", edit_project_path(project), class: "card-link" %>
+        <%= link_to "Delete", project_path(project), method: :delete, :data => { :confirm => 'Are you sure?' }, class: "card-link" %>
+      </div>
+    </div>
+  <% end %>
 <% end %>
