@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe ProjectsController, :type => :controller do
+RSpec.describe ProjectsController, :type => :controller do
   before do
-    user = User.all.first
+    user = FactoryGirl.create(:user)
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)
     allow(controller).to receive(:current_user).and_return(user)
   end
