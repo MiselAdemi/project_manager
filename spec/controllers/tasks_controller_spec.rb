@@ -7,6 +7,22 @@ RSpec.describe TasksController, type: :controller do
     allow(controller).to receive(:current_user).and_return(user)
   end
 
+  describe "GET #index" do
+    before do
+      @tasks = FactoryGirl.create_list(:task, 3, :with_same_project)
+    end
+
+    it "returns list of tasks" do
+      get :index, params: { project_id: @tasks.first.project }
+      expect(assigns(:tasks)).to eq(@tasks)
+    end
+
+    it "renders the #index view" do
+      get :index, params: { project_id: @tasks.first.project }
+      expect(response).to render_template(:index)
+    end
+  end
+
   describe "GET #show" do
     before do
       @task = FactoryGirl.create(:task)
