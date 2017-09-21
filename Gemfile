@@ -41,6 +41,9 @@ gem 'bootstrap', '~> 4.0.0.beta'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'rspec-rails', '~> 3.6', '>= 3.6.1'
+  gem 'capybara', '~> 2.15', '>= 2.15.1'
+  gem 'factory_girl_rails', '~> 4.8'
 end
 
 group :development do
