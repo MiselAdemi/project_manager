@@ -10,5 +10,9 @@ FactoryGirl.define do
     trait :invalid_task do
       name nil
     end
+
+    trait :with_same_project do
+      project { Project.first.present? ? Project.first : FactoryGirl.create(:project) }
+    end
   end
 end
