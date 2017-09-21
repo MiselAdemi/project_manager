@@ -19,26 +19,28 @@
         <ul class="navbar-nav ml-auto">
           <% if user_signed_in? %>
             <li class="nav-item">
-              <%= link_to current_user.email, edit_user_registration_path %>
+              <%= link_to current_user.email, edit_user_registration_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "Log Out", destroy_user_session_path, method: :delete %>
+              <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "nav-link" %>
             </li>
           <% else %>
             <li class="nav-item">
-              <%= link_to "Sign Up", new_user_registration_path %>
+              <%= link_to "Sign Up", new_user_registration_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "Sign In", new_user_session_path %>
+              <%= link_to "Sign In", new_user_session_path, class: "nav-link" %>
             </li>
           <% end %>
         </ul>
       </div>
     </nav>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <div class="container">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
 
-    <%= yield %>
+      <%= yield %>
+    </div>
   </body>
 </html>
