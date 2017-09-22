@@ -1,0 +1,6 @@
+<%= dynamic_form(commentable) do |f| %>
+  <div class="form-group">
+    <%= f.text_area :body, class: "form-control", placeholder: "Add a comment" %>
+  </div>
+  <%= f.submit class: "btn btn-outline-secondary" %>
+<% end %>
