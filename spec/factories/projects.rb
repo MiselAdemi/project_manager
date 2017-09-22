@@ -3,6 +3,10 @@ FactoryGirl.define do
     name { FFaker::HipsterIpsum.word }
     description { FFaker::HipsterIpsum.paragraph }
     user { User.first }
+
+    trait :with_user do
+      user { FactoryGirl.create(:user) }
+    end
   end
 
   factory :invalid_project, class: Project do
