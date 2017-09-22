@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe CommentsController, type: :controller do
+RSpec.describe Projects::CommentsController, type: :controller do
   before do
     user = FactoryGirl.create(:user)
     allow(request.env['warden']).to receive(:authenticate!).and_return(user)
@@ -8,21 +8,37 @@ RSpec.describe CommentsController, type: :controller do
   end
 
   describe "POST #create" do
-    context "with valid attributes" do
+    context "for project" do
       before do
-        @project = FactoryGirl.create(:project)
-        @comment_attr = FactoryGirl.build(:comment).attributes
+        @comment_attr = FactoryGirl.build(:comment, :for_project).attributes
       end
 
       it "creates a new comment" do
         expect{
-          post :create, params: { project_id: @project, comment: @comment_attr }
+          post :create, params: { project_id: Project.first, comment: @comment_attr }
         }.to change(Comment, :count).by(1)
       end
 
       it "redirects back" do
-        post :create, params: { project_id: Project.first, task: @task_attr }
-        expect(response).to redirect_to([Project.first, Task.last])
+        post :create, params: { project_id: Project.first, comment: @comment_attr }
+        expect(response).to redirect_to(authenticated_root_path)
+      end
+    end
+
+    context "for task" do
+      before do
+        @comment_attr = FactoryGirl.build(:comment, :for_task).attributes
+      end
+
+      it "creates a new comment" do
+        expect{
+          post :create, params: { project_id: Project.first, task_id: Task.first, comment: @comment_attr }
+        }.to change(Comment, :count).by(1)
+      end
+
+      it "redirects back" do
+        post :create, params: { project_id: Project.first, task_id: Task.first, comment: @comment_attr }
+        expect(response).to redirect_to(authenticated_root_path)
       end
     end
   end
