@@ -5,4 +5,5 @@ document.addEventListener('turbolinks:load', ->
 
   $('.card-title span.status:contains(1)').addClass("badge-success")
   $('.card-title span.status:contains(1)').text("Done")
+  $('.card-title span.status:contains(0)').text("")
 )
