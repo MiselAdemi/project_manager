@@ -9,6 +9,12 @@
           <%= link_to file.to_s.split("/").last, file.url %> |
         <% end %>
       <% end %>
+      <br>
+      <% if commentable.class.to_s == "Project" %>
+        <%= link_to "Delete", project_comment_path(commentable, comment), method: :delete, :data => { :confirm => 'Are you sure?' }, class: "card-link" %>
+      <% else %>
+        <%= link_to "Delete", project_task_comment_path(commentable.project, commentable, comment), method: :delete, :data => { :confirm => 'Are you sure?' }, class: "card-link" %>
+      <% end %>
     </div>
   </div>
 <% end %>
