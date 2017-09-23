@@ -8,6 +8,12 @@ class CommentsController < ApplicationController
     redirect_back(fallback_location: authenticated_root_path)
   end
 
+  def destroy
+    comment = @commentable.comments.find(params[:id])
+    comment.destroy
+    redirect_back(fallback_location: authenticated_root_path)
+  end
+
   private
   def comment_params
     params.require(:comment).permit(:body, {attachment: []})
